@@ -1,0 +1,34 @@
+﻿@model System.Int32
+
+@{
+    ViewBag.Title = "ExecutionCount";
+}
+
+    <h2>Execution Count Testing</h2>
+    <p>
+        The execution count from the view is: 
+        @Model. (@MvcApplication3.MvcApplication.ConstructorCallCount 
+        constructor calls.)
+    </p>
+    <p>
+        Rendered from the partial view via Html.RenderAction, the 
+        execution count is: @{Html.RenderAction("ExecutionCountAsPartial");}.
+    </p>
+    <p>
+        Rendered via ajax request from the partial view, the execution 
+        count is: <span id="count-result"></span>
+    </p>
+
+    @section scripts
+    {
+    <script type="text/javascript">
+        $(function () {
+            var requestUrl = '@Url.Action("ExecutionCountAsPartialViaAjax")';
+            $.ajax(requestUrl)
+            .success(function (data) {
+                $("#count-result").html(data);
+            });
+        });
+    </script>
+    }
+
